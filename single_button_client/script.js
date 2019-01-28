@@ -23,6 +23,15 @@ window.onload = function() {
 	document.querySelector('form').addEventListener('submit', (event) => {
 		event.preventDefault();
 
+		let data = {name: "Chris"};
+
+		fetch("http://localhost:5000/test", {
+			method: "POST",
+			body: JSON.stringify(data)
+		}).then(res => {
+			console.log(res);
+		});
+
 		//ref.push(data);
 
 		// ref.on('child_changed', (snapshot) => {
