@@ -1,0 +1,25 @@
+body {
+	background-color: #333333;
+}
+
+button {
+	border-radius: 5px;
+	background-color: #333333;
+	border: 2px solid red;
+	color: white;
+	padding: 30px 64px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 32px;
+	-webkit-transition-duration: 0.4s;
+	transition-duration: 0.4s;
+}
+
+.center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	padding: 15;
+}
