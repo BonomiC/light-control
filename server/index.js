@@ -7,7 +7,6 @@ const io = require('socket.io')(server);
 const cors = require('cors');
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 var toggle = false;

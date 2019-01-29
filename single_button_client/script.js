@@ -19,10 +19,25 @@ window.onload = function() {
 		console.log('Press');
 
 		let data = {
-			mode: "solid",
-			r: 255,
-			g: 0,
-			b: 0
+			mode: "cycle",
+			colors: [
+				{
+					r: 255,
+					g: 0,
+					b: 0
+				},
+				{
+					r: 0,
+					g: 255,
+					b: 0
+				},
+				{
+					r: 0,
+					g: 0,
+					b: 255
+				}
+			],
+			delay: 1500
 		};
 
 		post(data);
