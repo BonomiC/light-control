@@ -4,9 +4,9 @@ var socket = io.connect("https://node-server-test.now.sh", {
 });
 
 socket.on('connect', function () {
-    console.log('connected to localhost:3000');
-    socket.on('clientEvent', function (data) {
-        console.log('message from the server:', data);
-        socket.emit('serverEvent', "thanks server! for sending '" + data + "'");
+    console.log('connected to server');
+    socket.on('message', function (data) {
+        console.log('message from the server:', JSON.parse(data));
+        // socket.emit('serverEvent', "thanks server! for sending '" + data + "'");
     });
 });

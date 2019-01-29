@@ -4,10 +4,13 @@ const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
 
 var toggle = false;
+var socketConnected = false;
 
 app.get('/', (req, res) => {
 	if(toggle) {
@@ -20,18 +23,23 @@ app.get('/', (req, res) => {
 
 app.post('/test', (req, res) => {
 	toggle = !toggle;
-	console.log(req.query);
+	if(socketConnected) {
+		io.emit('message', JSON.stringify(req.query));
+	}
+	res.send(req.query);
 });
 
-io.on('connection', function (socket) {
-	console.log('connected:', socket.client.id);
-	socket.on('serverEvent', function (data) {
-		console.log('new message from client:', data);
+io.on('connection', function(socket) {
+	socketConnected = true;
+
+	// console.log('connected:', socket.client.id);
+	// socket.on('serverEvent', function(data) {
+	// 	console.log('new message from client:', data);
+	// });
+
+	socket.on('disconnect', () => {
+		socketConnected = false
 	});
-	setInterval(function () {
-		socket.emit('clientEvent', Math.random());
-		console.log('message sent to the clients');
-	}, 3000);
 });
 
 server.listen(port, () => console.log(port));
