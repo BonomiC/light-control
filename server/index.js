@@ -1,19 +1,37 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var cors = require('cors');
+const port = process.env.PORT || '5000';
 
-var app = express();
+const express = require('express');
+const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
-const port = 5000;
+var toggle = false;
 
-app.get('/', (req, res) => res.send('Hello world'));
-
-app.post('/test', (req, res) => {
-	console.log(req.query);
-	res.send(req.query);
+app.get('/', (req, res) => {
+	if(toggle) {
+		res.send('Toggle true');
+	}
+	else {
+		res.send('Toggle false');
+	}
 });
 
-app.listen(port, () => console.log(`Example app listening on  http://localhost:${port}`));
+app.post('/test', (req, res) => {
+	toggle = !toggle;
+	console.log(req.query);
+});
+
+io.on('connection', function (socket) {
+	console.log('connected:', socket.client.id);
+	socket.on('serverEvent', function (data) {
+		console.log('new message from client:', data);
+	});
+	setInterval(function () {
+		socket.emit('clientEvent', Math.random());
+		console.log('message sent to the clients');
+	}, 3000);
+});
+
+server.listen(port, () => console.log(port));

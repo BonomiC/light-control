@@ -1,0 +1,24 @@
+{
+  "name": "local-server",
+  "version": "1.0.0",
+  "description": "Local server for light control",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BonomiC/light-control.git"
+  },
+  "author": "Chris Bonomi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BonomiC/light-control/issues"
+  },
+  "homepage": "https://github.com/BonomiC/light-control#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  }
+}

@@ -1,6 +1,7 @@
 window.onload = function() {
 	var post = function(data) {
-		var url = new URL("http://localhost:5000/test")
+		// var url = new URL("http://localhost:5000/test")
+		var url = new URL("https://node-server-test.now.sh/test")
 		var params = { name: "Chris" };
 		Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
 		fetch(url, {
