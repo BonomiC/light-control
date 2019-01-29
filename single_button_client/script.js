@@ -2,10 +2,14 @@ window.onload = function() {
 	var post = function(data) {
 		// var url = new URL("http://localhost:5000/test")
 		var url = new URL("https://node-server-test.now.sh/test")
-		var params = { name: "Chris" };
-		Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+		// var params = { name: "Chris" };
+		// Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
 		fetch(url, {
-			method: "POST"
+			method: "POST",
+			body: JSON.stringify(data),
+			headers: {
+				"Content-Type": "application/json",
+			}
 		});
 	}
 
@@ -14,7 +18,12 @@ window.onload = function() {
 
 		console.log('Press');
 
-		let data = {name: "Chris"};
+		let data = {
+			mode: "solid",
+			r: 255,
+			g: 0,
+			b: 0
+		};
 
 		post(data);
 

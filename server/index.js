@@ -7,6 +7,7 @@ const io = require('socket.io')(server);
 const cors = require('cors');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 var toggle = false;
@@ -24,21 +25,30 @@ app.get('/', (req, res) => {
 app.post('/test', (req, res) => {
 	toggle = !toggle;
 	if(socketConnected) {
-		io.emit('message', JSON.stringify(req.query));
+		io.emit('message', JSON.stringify(req.body));
 	}
-	res.send(req.query);
+	res.send(req.body);
+});
+
+app.post('/red', (req, res) => {
+	let data = {
+		mode: 'solid',
+		r: 255,
+		g: 0,
+		b: 0
+	};
+
+	if(socketConnected) {
+		io.emit('message', JSON.stringify(data));
+	}
+	res.send(data);
 });
 
 io.on('connection', function(socket) {
 	socketConnected = true;
 
-	// console.log('connected:', socket.client.id);
-	// socket.on('serverEvent', function(data) {
-	// 	console.log('new message from client:', data);
-	// });
-
 	socket.on('disconnect', () => {
-		socketConnected = false
+		socketConnected = false;
 	});
 });
 
