@@ -1,11 +1,21 @@
-var io = require('socket.io-client');
-var socket = io.connect("https://node-server-test.now.sh", {
+const io = require('socket.io-client');
+const socket = io.connect("https://node-server-test.now.sh", {
 	reconnection: true
 });
 
 // var socket = io.connect("http://localhost:5000", {
 // reconnection: true
 // });
+
+const Mode = {
+	OFF: 1,
+	SOLID: 2,
+	CYCLE: 3,
+	FADE: 4,
+	BLINK: 5
+}
+
+var currentMode = Mode.OFF;
 
 var lightData;
 
@@ -18,8 +28,31 @@ socket.once('connect', function () {
 		lightData = JSON.parse(data);
 		console.log('Message from the server:', lightData);
 
-		if(lightData.colors) {
-			console.log('Number of colors:', lightData.colors.length);
-		}
+		parseMode(lightData);
+		console.log(Object.keys(Mode).filter(function(key) {return Mode[key] === currentMode})[0]);
+
+		// if(lightData.colors) {
+		// 	console.log('Number of colors:', lightData.colors.length);
+		// }
 	});
 });
+
+function parseMode(data) {
+	switch(data.mode) {
+		case "off":
+			currentMode = Mode.OFF;
+			break;
+		case "solid":
+			currentMode = Mode.SOLID;
+			break;
+		case "cycle":
+			currentMode = Mode.CYCLE
+			break;
+		case "fade":
+			currentMode = Mode.FADE;
+			break;
+		case "blink":
+			currentMode = Mode.BLINK;
+			break;
+	}
+}

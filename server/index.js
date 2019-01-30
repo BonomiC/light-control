@@ -43,6 +43,16 @@ app.post('/red', (req, res) => {
 	res.send(data);
 });
 
+app.post('/off', (req, res) => {
+	let data = {
+		mode: 'off'
+	};
+
+	if(socketConnected) {
+		io.emit('message', JSON.stringify(data));
+	}
+});
+
 io.on('connection', function(socket) {
 	socketConnected = true;
 
