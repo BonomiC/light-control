@@ -2,6 +2,7 @@ const io = require('socket.io-client');
 const socket = io.connect("https://node-server-test.now.sh", {
 	reconnection: true
 });
+const GPIO = require('pigpio').Gpio;
 
 // var socket = io.connect("http://localhost:5000", {
 // reconnection: true
@@ -14,6 +15,10 @@ const Mode = {
 	FADE: 4,
 	BLINK: 5
 }
+
+const red = new GPIO(26, {mode: GPIO.OUTPUT});
+const green = new GPIO(19, {mode: GPIO.OUTPUT});
+const blue = new GPIO(13, {mode: GPIO.OUTPUT});
 
 var currentMode = Mode.OFF;
 
@@ -55,4 +60,8 @@ function parseMode(data) {
 			currentMode = Mode.BLINK;
 			break;
 	}
+}
+
+function off() {
+
 }
