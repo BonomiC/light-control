@@ -32,9 +32,11 @@ app.post('/test', (req, res) => {
 app.post('/red', (req, res) => {
 	let data = {
 		mode: 'solid',
-		r: 255,
-		g: 0,
-		b: 0
+		colors: [{
+			r: 255,
+			g: 0,
+			b: 0
+		}]
 	};
 
 	if(socketConnected) {
@@ -51,6 +53,7 @@ app.post('/off', (req, res) => {
 	if(socketConnected) {
 		io.emit('message', JSON.stringify(data));
 	}
+	res.send(data);
 });
 
 io.on('connection', function(socket) {
